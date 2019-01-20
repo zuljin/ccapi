@@ -15,6 +15,11 @@ class CreateUserTable extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('username', 250)->charset('utf8')->nullable();
+            $table->string('name', 250)->charset('utf8')->nullable();
+            $table->string('lastName', 250)->charset('utf8')->nullable();
+            $table->string('email', 250)->charset('utf8')->nullable();
+            $table->string('password', 250)->charset('utf8')->nullable();
             $table->timestamps();
         });
     }

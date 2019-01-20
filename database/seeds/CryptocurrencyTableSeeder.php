@@ -24,7 +24,7 @@ class CryptocurrencyTableSeeder extends Seeder
     protected function getDateFromCMCAPI ()
     {
         $endpoint   = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest';
-        $params     = '?start=1&limit=2500&convert=USD';
+        $params     = '?start=1&limit=250&convert=USD';
         $key        = '&CMC_PRO_API_KEY=' . ENV('COINMARKETCAP_KEY', null);
             
         $client     = new GuzzleHttp\Client();
@@ -37,7 +37,7 @@ class CryptocurrencyTableSeeder extends Seeder
 
 
 // MAPPING
-// "id": 2,                                         OK  id
+// "id": 2,                                         OK  id (my own id)
 // "name": "Ethereum",                              OK  name
 // "symbol": "ETH",                                 OK  symbol
 // "logo": null,                                    KO  not found in JSON
@@ -46,7 +46,7 @@ class CryptocurrencyTableSeeder extends Seeder
 // "price_btc": "0.07797240",                       KO  not found in JSON
 // "24h_volume_usd": 3014730000,                    OK  qoute.USD.volume_24H         
 // "market_cap_usd": 71421998446,   	            OK  qoute.USD.market_ca
-// "available_supply": 99199149,                    OK  max_supply
+// "available_supply": 99199149,                    OK  circulating_supply
 // "total_supply": 99199149,                        OK  total_supply
 // "percent_change_1h": "0.28000000",               OK  qoute.USD.percent_change_1h
 // "percent_change_24h": "5.52000000",              OK  qoute.USD.percent_change_1h

@@ -4,13 +4,41 @@ cryptocurrency API example 1.0
 
 -----
 0) CREAR LAS TABLAS!!
-1) VER el tema de las interfaces para DDD
-2) VER como testear una tabla MYSQL
-3) VER como hacer una paginacion bien chula! 
+1) VER el tema de modelos CORE
+2) VER el tema de las interfaces para DDD
+3) VER como testear una tabla MYSQL
+4) VER como hacer una paginacion bien chula! 
 https://laravel.com/docs/5.7/pagination
 https://laravel.com/docs/5.7/eloquent-resources
-4) JWT para logear
+5) REVISAR vendors (jwt, cors)
+6) Generate random users
 
+# Requeriments Steps
+
+# Configurations Steps
+
+
+# Laravel Steps
+
+1) Generate tables
+
+$ php artisan migrate
+
+2) Populate tables in exactle this order
+
+$ php artisan db:seed --class=CryptocurrencyTableSeeder
+$ php artisan db:seed --class=PopulateUsersTableSeeder
+$ php artisan db:seed --class=CryptocurrencyHistoricalTableSeeder
+
+3) Using CCAPI. JWT security
+
+CCAPI is secured through a token, you can always use the test user to obtain a token and use it in the requests:
+
+username: saul.goodman
+password: goodlawyer
+
+Recommendation: POSTMAN with dynamic variables. JSON files with endpoints and variables are included in the repository. From POSTMAN you can call the
+AUTH endpoint and automatically the endpoints will have assigned the JWT token. Remember to select 'develop' enviroment variables in the top-right tab.
 
 
 Requeriments
