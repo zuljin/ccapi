@@ -1,2 +1,2 @@
 # ccapi
-cryptocurrency API example
+cryptocurrency API example 1.0
