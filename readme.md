@@ -3,6 +3,7 @@ ccapi
 cryptocurrency API example 1.0
 
 -----
+1) LOGIN CON JWT
 2) VER el tema de las interfaces para DDD
 3) VER como testear una tabla MYSQL
 4) VER como hacer una paginacion bien chula! 
