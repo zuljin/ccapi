@@ -20,6 +20,7 @@ class CreateUserTable extends Migration
             $table->string('lastName', 250)->charset('utf8')->nullable();
             $table->string('email', 250)->charset('utf8')->nullable();
             $table->string('password', 250)->charset('utf8')->nullable();
+            $table->string('remember_token', 250)->charset('utf8')->nullable();
             $table->timestamps();
         });
     }

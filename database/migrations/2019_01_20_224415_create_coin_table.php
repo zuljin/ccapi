@@ -22,7 +22,7 @@ class CreateCoinTable extends Migration
             // "rank": 2,                                       OK  cmc_rank
             // "price_usd": "719.98600000",                     OK  quote.USD.price
             // "price_btc": "0.07797240",                       KO  not found in JSON
-            // "24h_volume_usd": 3014730000,                    OK  qoute.USD.volume_24H         
+            // "24h_volume_usd": 3014730000,                    OK  qoute.USD.volume_24h         
             // "market_cap_usd": 71421998446,   	            OK  qoute.USD.market_ca
             // "available_supply": 99199149,                    OK  circulating_supply
             // "total_supply": 99199149,                        OK  total_supply
@@ -37,12 +37,12 @@ class CreateCoinTable extends Migration
             $table->string('symbol', 10)->charset('utf8')->nullable();
             $table->string('logo', 10)->charset('utf8')->default('')->nullable();
             $table->integer('rank')->nullable();
-            $table->float('price_usd')->nullable();
-            $table->float('price_btc')->default(null)->nullable();
-            $table->float('24h_volume_usd')->nullable();
-            $table->float('market_cap_usd')->nullable();
-            $table->float('available_supply')->nullable();
-            $table->float('total_supply')->nullable();
+            $table->double('price_usd')->nullable();
+            $table->double('price_btc')->default(null)->nullable();
+            $table->double('24h_volume_usd')->nullable();
+            $table->double('market_cap_usd')->nullable();
+            $table->double('available_supply')->nullable();
+            $table->double('total_supply')->nullable();
             $table->float('percent_change_1h')->nullable();
             $table->float('percent_change_24h')->nullable();
             $table->float('percent_change_7d')->nullable();

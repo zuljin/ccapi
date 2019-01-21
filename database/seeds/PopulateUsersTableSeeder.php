@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Models\User;
+
 class PopulateUsersTableSeeder extends Seeder
 {
     /**
@@ -15,24 +17,22 @@ class PopulateUsersTableSeeder extends Seeder
         
         $faker = Faker\Factory::create();
 
-        $user = [   
-            'username'      => 'goodman',
-            'name'          => 'Saul',
-            'lastName'      => 'Goodman',
-            'email'         => 'saul.goodman@chh.com',
-            'password'      => \Hash::make('goodlawyer')
-        ];
+        User::create([  'username'      => 'goodman',
+                        'name'          => 'Saul',
+                        'lastName'      => 'Goodman',
+                        'email'         => 'saul.goodman@chh.com',
+                        'password'      => \Hash::make('goodlawyer')
+                    ]);
 
         for($i = 0; $i < 100; $i++) 
         {
-            $user = [   
-                        'username'      => $faker->userName,
-                        'name'          => $faker->firstName,
-                        'lastName'      => $faker->lastName,
-                        'email'         => $faker->email,
-                        'password'      => \Hash::make('superpassword')
-                    ];
-            print_r($user);
+            User::create([  'username'      => $faker->userName,
+                            'name'          => $faker->firstName,
+                            'lastName'      => $faker->lastName,
+                            'email'         => $faker->email,
+                            'password'      => \Hash::make('superpassword')
+                        ]);
+            //print_r($user);
         }
     }
 }
