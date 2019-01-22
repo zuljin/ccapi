@@ -41,7 +41,7 @@ class CryptocurrencyHistoricalTableSeeder extends Seeder
                 // firstTime, current price
                 $firstTime = false;
                 
-                echo "[" . $coin->id . "] " . $date->format('Y-m-d') . " => " . $coin->price_usd  . "\n";
+                //echo "[" . $coin->id . "] " . $date->format('Y-m-d') . " => " . $coin->price_usd  . "\n";
                 
                 CoinHistorical::create([
                     'coin_id'       => $coin->id,

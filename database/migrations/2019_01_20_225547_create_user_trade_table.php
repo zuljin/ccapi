@@ -13,8 +13,8 @@ class CreateUserTradeTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_trade', function (Blueprint $table) {
-
+        Schema::create('user_trade', function (Blueprint $table) 
+        {
             // "coin_id": 2,
             // "user_id": 1,
             // "amount": "-2.2183",
@@ -31,8 +31,9 @@ class CreateUserTradeTable extends Migration
                   ->foreign('coin_id')->references('id')->on('coin')->onDelete('cascade');
             $table->integer('user_id')->unsigned()
                   ->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->float('amount');
-            $table->float('price_usd');
+            $table->double('amount');
+            $table->double('price_usd');
+            $table->double('total_usd');
             $table->string('notes', 500)->charset('utf8')->nullable();
             $table->timestamp('traded_at');
             $table->timestamps();

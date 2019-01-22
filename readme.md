@@ -23,14 +23,14 @@ https://laravel.com/docs/5.7/eloquent-resources
         
         ServerAdmin webmaster@localhost
         ServerName dev.cc
-        DocumentRoot /home/zuljin/projects/ccapi
+        DocumentRoot /home/zuljin/projects/ccapi/public
         
         <Directory />
             Options FollowSymLinks
             AllowOverride None
         </Directory>
         
-        <Directory /home/zuljin/projects/ccapi>
+        <Directory /home/zuljin/projects/ccapi/public>
             Options Indexes FollowSymLinks MultiViews
             AllowOverride None
             Order allow,deny
@@ -70,7 +70,7 @@ $ php artisan migrate
 $ php artisan db:seed --class=CryptocurrencyTableSeeder             OK
 $ php artisan db:seed --class=PopulateUsersTableSeeder              OK
 $ php artisan db:seed --class=CryptocurrencyHistoricalTableSeeder   OK
-$ php artisan db:seed --class=PopulateUserTrade
+$ php artisan db:seed --class=PopulateUserTrade                     OK
 
 4) Time to run tests if you want. Go terminal inside project an execute:
 
