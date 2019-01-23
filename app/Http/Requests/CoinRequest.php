@@ -16,6 +16,10 @@ class CoinRequest extends Request
         parent::__construct();
     }
 
+    /**
+     * Request rules for Show Coin historical movements
+    */
+
     public function rulesHistorical( $id, $dateFrom, $dateTo )
     {
         return [ 'parameters'    => [ 
@@ -53,7 +57,6 @@ class CoinRequest extends Request
     */
     public function rulesIndex( $page )
     {
-        echo $page . "\n";
         return [ 'parameters'    => [ 
                     'page'  => $page,
                 ],

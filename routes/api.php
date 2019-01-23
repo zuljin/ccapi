@@ -12,34 +12,38 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+//////////////////
+// API Version 1
 Route::group( [ 'prefix' => 'v1' ], function () 
 {
+    //////////////////
     // Login and get JWT
 	Route::post( 'auth',                            [	'as'    => 'auth.login',
                                                         'uses' 	=> 'Auth\AuthController@authenticate'] );
-           
-    //4) GET  - user portfolio:            resume user cryto trades         /user/{id}/portfolio
-    //5) POST - add new trade:             add a new trade to a user        /user/{id}/trade
-    
-    // Grouping for coins requests
+    //////////////////                                                 
+    // COIN requests
     Route::group( [ 'prefix' => 'coins', 'middleware' => 'jwt.auth' ], function () 
     {
-        // Get coin list paginated (25)
+        // Get list paginated (25)
         Route::get(	'',                             [   'as'    => 'coin.index',
                                                         'uses' 	=> 'CoinController@index'] );
-        // Get coin historical by range date
+        // Get historical by range date
         Route::get(	'{id}/historical/{from}/{to}',  [   'as'    => 'coin.historical',
                                                         'uses' 	=> 'CoinController@historical'] );
-        // Get coin detail
+        // Get detail
         Route::get(	'{id}',                         [   'as'    => 'coin.show',
                                                         'uses' 	=> 'CoinController@show'] );
-
     });
-    // Get coin list page number X. Little hack here. 
-    // I need to put out of group to avoir coins/?page=X. paginate creates coins?page=X
-    // Route::get( 'coins?page={1}', [      'as'    => 'coin.indexByPage',
-    //                                      'uses' 	=> 'CoinController@index'] );
-    
+    //////////////////
+    // USER requests
+    Route::group( [ 'prefix' => 'user', 'middleware' => 'jwt.auth' ], function () 
+    {   
+        // Get a resume of cryto trades
+        Route::get(	'{id}/portfolio',               [   'as'    => 'user.portfolio',
+                                                        'uses' 	=> 'UserController@portfolio'] );
+        // Add new trade
+        Route::post(	'{id}/trade',               [   'as'    => 'user.addTrade',
+                                                        'uses' 	=> 'UserController@storeTrade'] );
+    });
     
 });

@@ -22,7 +22,7 @@ class CoinController extends Controller
      * @return \Illuminate\Http\JsonResponse
     */
 
-    public function index( CoinRequest $request, $page = null )
+    public function index ( CoinRequest $request, $page = null )
     {
         try
         {   
@@ -83,19 +83,26 @@ class CoinController extends Controller
     */
 
     public function historical ( CoinRequest $request, $id, $dateFrom, $dateTo ) 
-    {        
-        // Validation
-        $validation = $request->validation( $request->rulesHistorical( $id, $dateFrom, $dateTo ), $request->messages( $id ) );
-        if( $validation !== true )
-            return $validation;
+    {   
+        try
+        {     
+            // Validation
+            $validation = $request->validation( $request->rulesHistorical( $id, $dateFrom, $dateTo ), $request->messages( $id ) );
+            if( $validation !== true )
+                return $validation;
 
-        // Passing Dates to Carbon
-        $dateFrom   = explode('-', $dateFrom);
-        $dateTo     = explode('-', $dateTo);
-        $dateFrom   = Carbon::create( $dateFrom[0], $dateFrom[1], $dateFrom[2] );
-        $dateTo     = Carbon::create( $dateTo[0], $dateTo[1], $dateTo[2] );
+            // Passing Dates to Carbon
+            $dateFrom   = explode('-', $dateFrom);
+            $dateTo     = explode('-', $dateTo);
+            $dateFrom   = Carbon::create( $dateFrom[0], $dateFrom[1], $dateFrom[2] );
+            $dateTo     = Carbon::create( $dateTo[0], $dateTo[1], $dateTo[2] );
 
-        $coinHistorical = (new CoinHistoricalRepository())->getByIdAndDateRange ( $id, $dateFrom, $dateTo );
-        return response()->json( ["historical" => $coinHistorical ], 200);
+            $coinHistorical = (new CoinHistoricalRepository())->getByIdAndDateRange ( $id, $dateFrom, $dateTo );
+            return response()->json( ["historical" => $coinHistorical ], 200);
+        }
+        catch (\Exception $e)
+        {
+            return response()->json( [ 'message'  => [ $e->getMessage() . ' ' . $e->getFile() . '(' . $e->getLine() . ')'] ], 500);
+        }
     }
 }

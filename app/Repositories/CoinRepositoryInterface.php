@@ -6,6 +6,6 @@ use App\Models\Coin;
 
 interface CoinRepositoryInterface
 {
-    function getById( $id ): Coin;
+    function getById( $id );
     function getAllPaginated( $elementsByPage, $page );
 }
