@@ -1,86 +1,125 @@
-ccapi
+# ccapi - cryptocurrency API 1.0
 
-cryptocurrency API example 1.0
+### Requeriments
 
------
-1) LOGIN CON JWT
-2) VER el tema de las interfaces para DDD
-3) VER como testear una tabla MYSQL
-4) VER como hacer una paginacion bien chula! 
-https://laravel.com/docs/5.7/pagination
-https://laravel.com/docs/5.7/eloquent-resources
-5) REVISAR vendors (jwt, cors)
+- Apache2 or another similar
+- Composer
+- Laravel 5.7
+- Laravel requires PHP >= 7.1.3
+- Laravel requires PHP Extensions: common, cli, mylsq,OpenSSL, PDO, Mbstring, XML, Ctype, JSON, BCMath
+- Mysql 5.7
+- Git
 
-# Requeriments Steps
+### Configuration (for UNIX, can be different for Windows or Apple)
 
-    - Laravel 5.7
+> Virtual host configuration file content
 
-# Configurations Steps  (for UNIX, can be different for Windows or Apple)
-
-1) Virtual host configuration file content:
-
-    <VirtualHost *:80>
+```
+<VirtualHost *:80>        
+    ServerAdmin webmaster@localhost
+    ServerName dev.cc
+    DocumentRoot /home/zuljin/projects/ccapi/public
         
-        ServerAdmin webmaster@localhost
-        ServerName dev.cc
-        DocumentRoot /home/zuljin/projects/ccapi/public
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
         
-        <Directory />
-            Options FollowSymLinks
-            AllowOverride None
-        </Directory>
+    <Directory /home/zuljin/projects/ccapi/public>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/ccapi-error.log
+    CustomLog ${APACHE_LOG_DIR}/ccapi-access.log combined
+
+    # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+    LogLevel warn
         
-        <Directory /home/zuljin/projects/ccapi/public>
-            Options Indexes FollowSymLinks MultiViews
-            AllowOverride None
-            Order allow,deny
-            allow from all
-        </Directory>
+</VirtualHost>
+```
+> Add virtual host site to Apache following the next steps:
 
-        ErrorLog ${APACHE_LOG_DIR}/ccapi-error.log
-        CustomLog ${APACHE_LOG_DIR}/ccapi-access.log combined
-
-        # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
-        LogLevel warn
-        
-    </VirtualHost>
-    add virtual host site to Apache steps:
-
-2) Follow the next steps:
-
+```
 $ cd /etc/apache2/sites-available 
 $ sudo vim ccapi.conf 
-    Copy paste Virtual host configuration file content in step 1
+# copy paste Virtual host configuration file content in step 1
 $ sudo a2ensite ccapi.conf 
 $ sudo vim etc/hosts
-    Add a new line with: 
-    127.0.0.1 dev.cc
+# add a new line with: 
+127.0.0.1 dev.cc
+```
+![alt text](https://media1.giphy.com/labs/images/laravel-wrapper.gif "Logo Title Text 1")
 
-# Laravel Steps
+#### Laravel
 
-1) Check composer.json to install libraries dependencies like guzzle, carbon, jwt, etc...
-   Check .env for COINMARKETCAP_KEY (my personal key, i will disable in a couple of days)
+- Please, download the project a use develop branch. Master branch is not maintained.
+- Each command (php artisan) must be executed in the project folder
 
-2) Generate tables
+> Check <b>composer.json</b> file to install extra libraries used:
 
+- <b>guzzle</b> for COINMARKETCAP API communication
+- <b>carbon</b> to work with dates
+- <b>laravel-iso8601-validator</b> specific validator for an isoiso8601 date
+- <b>jwt-auth</b> to secure API
+- <b>faker</b> to generate random users info (name, emails, etc..)
+
+> Check <b>.env</b> file for <b>COINMARKETCAP_KEY</b>. Is my personal key, so, i will disable it in a few days.
+
+
+> Run next command to generate tables:
+
+```
 $ php artisan migrate
+```
 
-3) Populate tables in this order. We need Cryptocoins, some fake users, some Cryptocoins historical movements and finally son user trades with coins:
+> Populate tables in this order. We need cryptpcoins, some fake users, some cryptocoins historical movements and finally some user trades with coins. We will generate it with theses seeders <b>(more info inside each seeder)</b>:
 
-$ php artisan db:seed --class=CryptocurrencyTableSeeder             OK
-$ php artisan db:seed --class=PopulateUsersTableSeeder              OK
-$ php artisan db:seed --class=CryptocurrencyHistoricalTableSeeder   OK
-$ php artisan db:seed --class=PopulateUserTrade                     OK
+```
+$ php artisan db:seed --class=CryptocurrencyTableSeeder
+$ php artisan db:seed --class=PopulateUsersTableSeeder          
+$ php artisan db:seed --class=CryptocurrencyHistoricalTableSeeder
+$ php artisan db:seed --class=PopulateUserTrade
+```
 
-4) Time to run tests if you want. Go terminal inside project an execute:
+> Using CCAPI and deal with JWT security
 
+CCAPI is secured through a token, you can always use a master user test to obtain a token and use it in the requests, and copy-paste it in all requests:
+
+<b>username:</b> saul.goodman
+<b>password:</b> goodlawyer
+
+<b>Recommendation</b>: Anyway, within the project, you have everything you need and automated to test it with <b>POSTMAN</b> with dynamic variables. JSON files are included in <b>postman folder</b>, you just need to import it. Then, when you call the <b>authenticate</b> endpoint, automatically the rest of endpoints will have assigned the Bearer token (jwt). Remember, before, to select <b>develop</b> enviroment variables in the top-right tab where you can read <b>no enviroment</b>. Any doubts, contact me!
+
+> If you want to run tests, go terminal inside the project an execute:
+
+```
 $ ./vendor/bin/phpunit
+```
 
-5) Using CCAPI. JWT security
+phpunit.xml is a important file, link config/database.php because we force to write records not in really database, we use memory
 
-CCAPI is secured through a token, you can always use the a master test user to obtain a token and use it in the requests:
+-------------------
+-------------------
+Hola! 
 
-username: saul.goodman
-password: goodlawyer
+Últimos comentarios y mejoras. Como siempre, las mejoras son por que no he tenido tiempo suficiente, llevo unos días con el peque que voy de culo pero no es excusa. Por lo que listo las cosas que no están al 100% que soy consciente, otras son por que me habré despistado.
 
-Recommendation: POSTMAN with dynamic variables. JSON files with endpoints and variables are included in the repository. From POSTMAN you can call the AUTH endpoint and automatically the endpoints will have assigned the JWT token. Remember to select 'develop' enviroment variables in the top-right tab. Chech POSTMAN folder attached.
+- Tests. Solo he creado el test <b>CoinTest</b> del modelo Coin, el resto sería lo mismo para esos modelos, con su factory para aplicar el faker en los tests, no difiere mucho. Es muy estandar. Poder crear, chequear la estructura, etc.. Podría haber profundizado más en los test de la API, pero no he tenido más tiempo y quiero cerrarlo hoy.
+
+- Soy consciente que una respuesta STATUS: 500 cuando el elemento/recurso no ha sido encontraro, está totalmente mal. De hecho me gusta ser bastante purista con ésto, al igual que usar el Method que toca. No siento orgullo de entregarlo así pero no he podido acabar de parametrizar el validador custom final que he estado montando.
+
+Se que restará puntos :( pero... c'ets la vie!
+
+Me hubiera gustado montar Swagger para documentar cada endpoint de la API, pero al menos he podido documentar un poco de forma general la puesta en marcha del proyecto en el readme.md, e incluir toda la configuración de POSTMAN parametrizado, que para APIs es un lujo. 
+
+Posiblemente me deje algo en el tintero. Espero que no tengáis ninguna problema en la puesta en marcha del proyecto (rama: develop),a mi me corre todo bien. En fin, gracias por el tiempo revisando el ejercicio. Me quedo a la espera que me digáis algo. Saludos!
+
+
+
+
+![alt text][logo]
+
+[logo]: https://giphy.com/static/img/labs.gif "Logo Title Text 2"

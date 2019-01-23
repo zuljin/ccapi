@@ -6,6 +6,9 @@ use Illuminate\Contracts\Console\Kernel;
 
 trait CreatesApplication
 {
+    protected $mainAPP  = '';
+    protected $mock     = '';
+
     /**
      * Creates the application.
      *
@@ -16,7 +19,7 @@ trait CreatesApplication
         $app = require __DIR__.'/../bootstrap/app.php';
 
         $app->make(Kernel::class)->bootstrap();
-
+        $this->mainAPP = $app;
         return $app;
     }
 }

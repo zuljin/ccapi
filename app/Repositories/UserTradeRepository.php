@@ -10,7 +10,10 @@ class UserTradeRepository implements UserTradeRepositoryInterface {
     }
 
     /**
-     * 
+     * Return a summary of crypto trades done by the user grouping by coin
+     *
+     * @param  int      $id         user identifier
+     * @return \Illuminate\Http\Collection
     */
 
     public function getPortfolio ( $id )
@@ -22,7 +25,10 @@ class UserTradeRepository implements UserTradeRepositoryInterface {
     }
 
     /**
+     * Store a trade specified by the user
      * 
+     * @param  int      $id         user identifier
+     * @return UserTrade
     */
 
     public function storeTrade ( $id, $data ) 

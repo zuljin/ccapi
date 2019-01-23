@@ -51,6 +51,6 @@ class UserController extends Controller
         
         // Insert into DB and response
         $trade = (new UserTradeRepository())->storeTrade( $id, $request->all() );
-        return response()->json( $trade, 200);
+        return response()->json( $trade, 201);
     }
 }

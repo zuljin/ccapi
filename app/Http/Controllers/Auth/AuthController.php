@@ -45,7 +45,7 @@ class AuthController extends Controller
     }
 
     /**
-    * @todo REQUEST / TEST 
+    * @todo 
     **/
 
     public function authenticate( Request $request )

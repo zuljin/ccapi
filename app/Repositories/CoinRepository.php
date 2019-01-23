@@ -9,7 +9,9 @@ class CoinRepository implements CoinRepositoryInterface {
     }
 
     /**
-     * 
+     * Get Coin by Id
+     * @param  int      $id         coin identifier
+     * @return Coin
     */
 
     public function getById ( $id )

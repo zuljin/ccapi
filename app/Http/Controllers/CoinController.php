@@ -73,7 +73,8 @@ class CoinController extends Controller
     }
 
     /**
-     * Return the whole list of properties of a cryptocurrency for the given coin id .
+     * Return the historical data of a cryptocurrency, filtered by the range 
+     * of time the client want to show
      *
      * @param  CoinRequest  $request
      * @param  int          $id

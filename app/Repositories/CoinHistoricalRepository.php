@@ -9,7 +9,12 @@ class CoinHistoricalRepository implements CoinHistoricalRepositoryInterface {
     }
 
     /**
-     * 
+     * Return the historical data of a cryptocurrency, filtered by the range of time the client want to show.
+     *
+     * @param  int      $id         coin identifier
+     * @param  Carbon   $dateFrom
+     * @param  Carbon   $dateTo
+     * @return \Illuminate\Http\Collection
     */
 
     public function getByIdAndDateRange ( $id, $dateFrom, $dateTo )
