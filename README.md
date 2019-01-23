@@ -99,7 +99,7 @@ CCAPI is secured through a token, you can always use a master user test to obtai
 $ ./vendor/bin/phpunit
 ```
 
-phpunit.xml is a important file, link config/database.php because we force to write records not in really database, we use memory
+<b>phpunit.xml</b> is an important file, also config/database.php because we force to write records not in really database, we use memory option
 
 -------------------
 -------------------
@@ -117,11 +117,14 @@ Me hubiera gustado montar Swagger para documentar cada endpoint de la API, pero 
 
 Posiblemente me deje algo en el tintero. Espero que no tengáis ninguna problema en la puesta en marcha del proyecto (rama: develop),a mi me corre todo bien. 
 
-En fin, gracias por el tiempo revisando el ejercicio. Me quedo a la espera que me digáis algo. 
+En fin, gracias por el tiempo revisando el ejercicio. Me quedo a la espera que me digáis algo. Cualquier duda ya sabéis.
 
 Saludos!
 
 Juan Vargas Cracolici | juan.vargas.cracolici@gmail.com
+
+
+
 
 
 ![alt text][logo]
