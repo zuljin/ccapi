@@ -68,8 +68,8 @@ class UserTest extends TestCase
         // Asserts
         $response->assertStatus(200);
         $this->assertEquals( $results['coin_id'], $coin->id);
-        $this->assertEquals( $results['amount'], ( $userTrade1->amount + $userTrade2->amount ));
-        $this->assertEquals( $results['price_usd'], ($userTrade1->price_usd + $userTrade2->price_usd ));
+        $this->assertEquals( round($results['amount']), round(( $userTrade1->amount + $userTrade2->amount )) );
+        $this->assertEquals( round($results['price_usd']), round(($userTrade1->price_usd + $userTrade2->price_usd )) );
     }
     
     /** @test  */

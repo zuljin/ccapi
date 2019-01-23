@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Faker\Factory as Faker;
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -12,11 +14,12 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\Response;
 
 use App\Models\Coin;
+use App\Models\CoinHistorical;
 
 class CoinTest extends TestCase
 {    
     use WithoutMiddleware;
-    
+
     protected $token   = '';
     protected $faker;
     
@@ -149,9 +152,32 @@ class CoinTest extends TestCase
         //print_r($response->getContent());
     }
 
-    /** @todo - test  */
+    /** @test  */
     public function it_get_historical_coin_details()
     {
-        $endPoint   = 'coins/{id}/historical/{from}/{to}';
+        // Create data
+        $coin           = factory(Coin::class)->create();
+        $dateNow        = Carbon::now('Europe/Madrid');
+        $dateMonthAgo   = Carbon::now('Europe/Madrid')->subMonths(1);
+        $period         = CarbonPeriod::create( $dateMonthAgo , $dateNow );
+
+        foreach (array_reverse($period->toArray()) as $date) 
+        {
+            $percentdiff      = (mt_rand( -100, 100 ) / 10);
+            $coin->price_usd *= (1 + $percentdiff / 100);
+            CoinHistorical::create([
+                'coin_id'       => $coin->id,
+                'price_usd'     => $coin->price_usd,
+                'snapshot_at'   => $date,
+            ]); 
+        }       
+
+        // Request
+        $endPoint   = '/api/v1/coins/' . $coin->id . '/historical/' . $dateMonthAgo->format('Y-m-d') . '/' . $dateNow->format('Y-m-d');
+        $response   = $this->call('GET', $endPoint, [/*postdata*/], [/* cookies */], [/* files */], [/*headers*/]);
+        
+        // Asserts
+        $response->assertStatus(200);
+        $response->assertJson(['historical'=> true]);
     }
 }

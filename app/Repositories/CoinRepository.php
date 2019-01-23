@@ -10,7 +10,8 @@ class CoinRepository implements CoinRepositoryInterface {
 
     /**
      * Get Coin by Id
-     * @param  int      $id         coin identifier
+     * 
+     * @param  int  $id coin identifier
      * @return Coin
     */
 
@@ -20,7 +21,12 @@ class CoinRepository implements CoinRepositoryInterface {
     }
 
     /**
+     * Return a paginated list of cryptocurrencies with important info to show, it
+     * can return a specific page
      * 
+     * @param  int  $elementsByPage     total elements by page
+     * @param  int  $page               specific page
+     * @return \Illuminate\Http\Collection
      */
     
     public function getAllPaginated ( $elementsByPage, $page )
