@@ -115,9 +115,13 @@ Se que restará puntos :( pero... c'ets la vie!
 
 Me hubiera gustado montar Swagger para documentar cada endpoint de la API, pero al menos he podido documentar un poco de forma general la puesta en marcha del proyecto en el readme.md, e incluir toda la configuración de POSTMAN parametrizado, que para APIs es un lujo. 
 
-Posiblemente me deje algo en el tintero. Espero que no tengáis ninguna problema en la puesta en marcha del proyecto (rama: develop),a mi me corre todo bien. En fin, gracias por el tiempo revisando el ejercicio. Me quedo a la espera que me digáis algo. Saludos!
+Posiblemente me deje algo en el tintero. Espero que no tengáis ninguna problema en la puesta en marcha del proyecto (rama: develop),a mi me corre todo bien. 
 
+En fin, gracias por el tiempo revisando el ejercicio. Me quedo a la espera que me digáis algo. 
 
+Saludos!
+
+Juan Vargas Cracolici | juan.vargas.cracolici@gmail.com
 
 
 ![alt text][logo]
