@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use App\Models\Coin;
 
-class CoinRepositoty implements CoinRepositotyInterface {
+class CoinRepository implements CoinRepositoryInterface {
 
     public function __construct() {
     }
@@ -20,6 +20,7 @@ class CoinRepositoty implements CoinRepositotyInterface {
     /**
      * 
      */
+    
     public function getAllPaginated ( $elementsByPage, $page )
     {
         $fieldsToShow = [   'id', 
@@ -29,7 +30,7 @@ class CoinRepositoty implements CoinRepositotyInterface {
                             'available_supply', 
                             'percent_change_24h'
                         ];
-                        
+
         return  Coin::paginate( $elementsByPage, $fieldsToShow, 'page', $page );
     }
 }

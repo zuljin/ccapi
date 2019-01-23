@@ -16,6 +16,22 @@ class CoinRequest extends Request
         parent::__construct();
     }
 
+    public function rulesHistorical( $id, $dateFrom, $dateTo )
+    {
+        return [ 'parameters'    => [ 
+                    'coinId'    => $id,
+                    'dateFrom'  => $dateFrom,
+                    'dateTo'    => $dateTo,
+                ],
+                'rules'         => [
+                    'coinId'    => 'required|exists:coin,id',
+                    'dateFrom'  => 'required|date_format:Y-m-d|before:dateTo',
+                    'dateTo'    => 'required|date_format:Y-m-d|after:dateFrom',
+                ]
+            ];
+            
+
+    }
     
     /**
      * Request rules for Show Request
@@ -77,7 +93,10 @@ class CoinRequest extends Request
     public function messages( $coinId = '')
     {    
         return [
-            'coinId.exists' => 'Coin ' . $coinId . ' not found',
+            'coinId.exists'     => 'Coin ' . $coinId . ' not found',
+
+            'dateTo.date_format'      => 'DateFrom must be like: YYYY-MM-DD. Example: 2018-10-01 (Y-m-d)',
+            'dateFrom.date_format'    => 'DateTo must be like: YYYY-MM-DD. Example: 2018-08-08 (Y-m-d)',
         ];
     }
 

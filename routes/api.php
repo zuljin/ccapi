@@ -16,10 +16,9 @@ use Illuminate\Http\Request;
 Route::group( [ 'prefix' => 'v1' ], function () 
 {
     // Login and get JWT
-	Route::post( 'auth',    [	'as'    => 'auth.login',
-                                'uses' 	=> 'Auth\AuthController@authenticate'] );
+	Route::post( 'auth',                            [	'as'    => 'auth.login',
+                                                        'uses' 	=> 'Auth\AuthController@authenticate'] );
            
-    //3) GET  - crytocurrency history:     range date                       /coins/{id}/historical/{range_date}
     //4) GET  - user portfolio:            resume user cryto trades         /user/{id}/portfolio
     //5) POST - add new trade:             add a new trade to a user        /user/{id}/trade
     
@@ -27,11 +26,14 @@ Route::group( [ 'prefix' => 'v1' ], function ()
     Route::group( [ 'prefix' => 'coins', 'middleware' => 'jwt.auth' ], function () 
     {
         // Get coin list paginated (25)
-        Route::get(	'',             [   'as'    => 'coin.index',
-                                        'uses' 	=> 'CoinController@index'] );
+        Route::get(	'',                             [   'as'    => 'coin.index',
+                                                        'uses' 	=> 'CoinController@index'] );
+        // Get coin historical by range date
+        Route::get(	'{id}/historical/{from}/{to}',  [   'as'    => 'coin.historical',
+                                                        'uses' 	=> 'CoinController@historical'] );
         // Get coin detail
-        Route::get(	'{id}',         [   'as'    => 'coin.show',
-                                        'uses' 	=> 'CoinController@show'] );
+        Route::get(	'{id}',                         [   'as'    => 'coin.show',
+                                                        'uses' 	=> 'CoinController@show'] );
 
     });
     // Get coin list page number X. Little hack here. 

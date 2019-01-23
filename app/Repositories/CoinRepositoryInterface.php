@@ -4,8 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Coin;
 
-interface CoinRepositotyInterface
+interface CoinRepositoryInterface
 {
-    function getById( $id );
+    function getById( $id ): Coin;
     function getAllPaginated( $elementsByPage, $page );
 }
