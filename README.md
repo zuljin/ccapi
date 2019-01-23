@@ -1,21 +1,31 @@
-# ccapi
-cryptocurrency API example 1.0
+# ccapi - cryptocurrency API 1.0
 
-# Requeriments
+### Requeriments
 
-# APACHE - Viritual host configuration file content and Steps
+- Apache2 or another similar
+- Composer
+- Laravel 5.7
+- Laravel requires PHP >= 7.1.3
+- Laravel requires PHP Extensions: common, cli, mylsq,OpenSSL, PDO, Mbstring, XML, Ctype, JSON, BCMath
+- Mysql 5.7
+- Git
 
-<VirtualHost *:80>
+### Configuration (for UNIX, can be different for Windows or Apple)
 
+> Virtual host configuration file content
+
+```
+<VirtualHost *:80>        
     ServerAdmin webmaster@localhost
     ServerName dev.cc
-    DocumentRoot /home/zuljin/projects/ccapi
+    DocumentRoot /home/zuljin/projects/ccapi/public
+        
     <Directory />
         Options FollowSymLinks
         AllowOverride None
     </Directory>
-
-    <Directory /home/zuljin/projects/ccapi>
+        
+    <Directory /home/zuljin/projects/ccapi/public>
         Options Indexes FollowSymLinks MultiViews
         AllowOverride None
         Order allow,deny
@@ -23,231 +33,93 @@ cryptocurrency API example 1.0
     </Directory>
 
     ErrorLog ${APACHE_LOG_DIR}/ccapi-error.log
-
-    # Possible values include: debug, info, notice, warn, error, crit,
-    # alert, emerg.
-    LogLevel warn
-
     CustomLog ${APACHE_LOG_DIR}/ccapi-access.log combined
 
+    # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+    LogLevel warn
+        
 </VirtualHost>
+```
+> Add virtual host site to Apache following the next steps:
+
+```
+$ cd /etc/apache2/sites-available 
+$ sudo vim ccapi.conf 
+# copy paste Virtual host configuration file content in step 1
+$ sudo a2ensite ccapi.conf 
+$ sudo vim etc/hosts
+# add a new line with: 
+127.0.0.1 dev.cc
+```
+![alt text](https://media1.giphy.com/labs/images/laravel-wrapper.gif "Logo Title Text 1")
+
+#### Laravel
+
+- Please, download the project a use develop branch. Master branch is not maintained.
+- Each command (php artisan) must be executed in the project folder
+
+> Check <b>composer.json</b> file to install extra libraries used:
+
+- <b>guzzle</b> for COINMARKETCAP API communication
+- <b>carbon</b> to work with dates
+- <b>laravel-iso8601-validator</b> specific validator for an isoiso8601 date
+- <b>jwt-auth</b> to secure API
+- <b>faker</b> to generate random users info (name, emails, etc..)
+
+> Check <b>.env</b> file for <b>COINMARKETCAP_KEY</b>. Is my personal key, so, i will disable it in a few days.
 
 
-add virtual host site to Apache steps:
+> Run next command to generate tables:
 
-$ cd /etc/apache2/sites-available
-$ sudo vim ccapi.conf (copy paste virtual host configuration)
-$ sudo a2ensite ccapi.conf
-$ sudo vim etc/hosts 
+```
+$ php artisan migrate
+```
 
-add a new line with:
-127.0.0.1   dev.cc
+> Populate tables in this order. We need cryptpcoins, some fake users, some cryptocoins historical movements and finally some user trades with coins. We will generate it with theses seeders <b>(more info inside each seeder)</b>:
 
-# DATA STRUCTRUE EXAMPLES
+```
+$ php artisan db:seed --class=CryptocurrencyTableSeeder
+$ php artisan db:seed --class=PopulateUsersTableSeeder          
+$ php artisan db:seed --class=CryptocurrencyHistoricalTableSeeder
+$ php artisan db:seed --class=PopulateUserTrade
+```
 
-Coin
-{
-  "id": 2,
-  "name": "Ethereum",
-  "symbol": "ETH",
-  "logo": null,
-  "rank": 2,
-  "price_usd": "719.98600000",
-  "price_btc": "0.07797240",
-  "24h_volume_usd": 3014730000,
-  "market_cap_usd": 71421998446,
-  "available_supply": 99199149,
-  "total_supply": 99199149,
-  "percent_change_1h": "0.28000000",
-  "percent_change_24h": "5.52000000",
-  "percent_change_7d": "14.58000000",
-  "created_at": "2018-05-03T08:54:02+00:00",
-  "updated_at": "2018-05-03T08:54:02+00:00"
-}
+> Using CCAPI and deal with JWT security
 
-Historical
-{
-  "price_usd": "2962.04162456",
-  "snapshot_at": "2018-04-03T10:54:02+00:00"
-}
+CCAPI is secured through a token, you can always use a master user test to obtain a token and use it in the requests, and copy-paste it in all requests:
 
-Individual Trade
-{
-  "coin_id": 2,
-  "user_id": 1,
-  "amount": "-2.2183",
-  "price_usd": "675.982",
-  "total_usd": -1499.5308706,
-  "notes": null,
-  "id": 3,
-  "created_at": "2018-05-03T09:00:07+00:00",
-  "updated_at": "2018-05-03T09:00:07+00:00",
-  "traded_at": "2018-04-20T16:40:51+00:00"
-}
+<b>username:</b> saul.goodman
+<b>password:</b> goodlawyer
 
-Grouped Trades
-{
-  "coin_id": 2,
-  "amount": "-11.09150000",
-  "price_usd": "-7497.65435300"
-}
+<b>Recommendation</b>: Anyway, within the project, you have everything you need and automated to test it with <b>POSTMAN</b> with dynamic variables. JSON files are included in <b>postman folder</b>, you just need to import it. Then, when you call the <b>authenticate</b> endpoint, automatically the rest of endpoints will have assigned the Bearer token (jwt). Remember, before, to select <b>develop</b> enviroment variables in the top-right tab where you can read <b>no enviroment</b>. Any doubts, contact me!
 
-## ENDPOINTS
+> If you want to run tests, go terminal inside the project an execute:
 
-Get the list of coins
-GET /coins
+```
+$ ./vendor/bin/phpunit
+```
 
-+ Request
-  + Headers
-    Accept: 'application/json'
-  + Body
-    {
-      "page": 1
-    }
+phpunit.xml is a important file, link config/database.php because we force to write records not in really database, we use memory
 
-+ Response 200
-  {
-    "coins": {
-      "total": 100,
-      "per_page": 25,
-      "current_page": 1,
-      "last_page": 4,
-      "first_page_url": "http://dev.cryptos.com/coins?page=1",
-      "last_page_url": "http://dev.cryptos.com/coins?page=4",
-      "next_page_url": "http://dev.cryptos.com/coins?page=2",
-      "prev_page_url": null,
-      "path": "http://dev.cryptos.com/coins",
-      "from": 1,
-      "to": 25,
-      "data":[
-        {
-          // Coin Object
-        },
-        {
-          // Coin Object
-        },
-        ...
-      ]
-    }
-  }
-Get a coin details
-GET /coins/{coin_id}
+-------------------
+-------------------
+Hola! 
 
-+ Parameters
-  + coin_id (number) - Coin ID
+Últimos comentarios y mejoras. Como siempre, las mejoras son por que no he tenido tiempo suficiente, llevo unos días con el peque que voy de culo pero no es excusa. Por lo que listo las cosas que no están al 100% que soy consciente, otras son por que me habré despistado.
 
-+ Request
-  + Headers
-    Accept: 'application/json'
+- Tests. Solo he creado el test <b>CoinTest</b> del modelo Coin, el resto sería lo mismo para esos modelos, con su factory para aplicar el faker en los tests, no difiere mucho. Es muy estandar. Poder crear, chequear la estructura, etc.. Podría haber profundizado más en los test de la API, pero no he tenido más tiempo y quiero cerrarlo hoy.
 
-+ Response 200
-  {
-    "coin": {
-      // Coin Object
-    }
-  }
+- Soy consciente que una respuesta STATUS: 500 cuando el elemento/recurso no ha sido encontraro, está totalmente mal. De hecho me gusta ser bastante purista con ésto, al igual que usar el Method que toca. No siento orgullo de entregarlo así pero no he podido acabar de parametrizar el validador custom final que he estado montando.
 
-+ Response 404
-  {
-    error: "Coin {coin_id} not found"
-  }
-Get a coin historical
-GET /coins/{coin_id}/historical
+Se que restará puntos :( pero... c'ets la vie!
 
-+ Parameters
-  + coin_id (number) - Coin ID
+Me hubiera gustado montar Swagger para documentar cada endpoint de la API, pero al menos he podido documentar un poco de forma general la puesta en marcha del proyecto en el readme.md, e incluir toda la configuración de POSTMAN parametrizado, que para APIs es un lujo. 
 
-+ Request
-  + Headers
-    Accept: 'application/json'
+Posiblemente me deje algo en el tintero. Espero que no tengáis ninguna problema en la puesta en marcha del proyecto (rama: develop),a mi me corre todo bien. En fin, gracias por el tiempo revisando el ejercicio. Me quedo a la espera que me digáis algo. Saludos!
 
-+ Response 200
-  {
-    "historical": [
-      {
-        // Historical Object
-      },
-      ...
-    ]
-  }
 
-+ Response 404
-  {
-    error: "Coin {coin_id} not found"
-  }
-Get authed user portfolio
-GET /portfolio
 
-+ Request
-  + Headers
-    Accept: 'application/json'
-    Authorization: Basic richard@rich.com:secret
 
-+ Response 200
-  {
-    coins: [
-      {
-        coin_id: int,
-        amount: float,
-        price_usd: float
-      },
-      ...
-    ]
-  }
+![alt text][logo]
 
-+ Response 401 Unauthorized
-Store a new trade in the authed user portfolio
-POST /portfolio
-
-+ Request
-  + Headers
-    Accept: 'application/json'
-    Authorization: Basic richard@rich.com:secret
-
-  + Body
-    {
-      coin_id: int
-      amount: float, (could be negative)
-      price_usd: float,
-      traded_at: date, ('2018-04-20T16:40:51.620Z', Iso8601)
-      notes: 'I want that lambo!' (optional)
-    }
-
-+ Response 200
-  {
-    trade: {
-      "coin_id": "2",
-      "user_id": 1,
-      "amount": "-2.2183",
-      "price_usd": "675.982",
-      "total_usd": -1499.5308706,
-      "notes": null,
-      "traded_at": "2018-04-20T16:40:51+00:00",
-      "updated_at": "2018-05-03T09:08:26+00:00",
-      "created_at": "2018-05-03T09:08:26+00:00",
-      "id": 5
-    }
-  }
-
-+ Response 400
-  {
-    coin_id: [
-      "The coin id field is required.",
-      "The selected coin id is invalid."
-    ],
-    amount: [
-      "The amount field is required.",
-      "The amount must be a number."
-    ],
-    price_usd: [
-      "The price usd field is required.",
-      "The price usd must be a number.",
-      "The price usd must be at least 0."
-    ],
-    traded_at: [
-      "The traded at field is required.",
-      "The traded at must be a date before 2018-05-03T09:14:39+00:00."
-    ]
-  }
-
-+ Response 401 Unauthorized
+[logo]: https://giphy.com/static/img/labs.gif "Logo Title Text 2"
