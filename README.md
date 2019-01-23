@@ -1,4 +1,4 @@
-# ccapi - cryptocurrency API 1.0
+# ccapi - cryptocurrency API 1.0 (develop branch)
 
 ### Requeriments
 
