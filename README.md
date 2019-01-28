@@ -88,8 +88,8 @@ $ php artisan db:seed --class=PopulateUserTrade
 
 CCAPI is secured through a token, you can always use a master user test to obtain a token and use it in the requests, and copy-paste it in all requests:
 
-<b>username:</b> saul.goodman
-<b>password:</b> goodlawyer
+-<b>username:</b> saul.goodman
+-<b>password:</b> goodlawyer
 
 <b>Recommendation</b>: Anyway, within the project, you have everything you need and automated to test it with <b>POSTMAN</b> with dynamic variables. JSON files are included in <b>postman folder</b>, you just need to import it. Then, when you call the <b>authenticate</b> endpoint, automatically the rest of endpoints will have assigned the Bearer token (jwt). Remember, before, to select <b>develop</b> enviroment variables in the top-right tab where you can read <b>no enviroment</b>. Any doubts, contact me!
 
