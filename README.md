@@ -55,7 +55,7 @@ $ sudo vim etc/hosts
 
 #### Laravel
 
-- Please, download the project a use develop branch. Master branch is not maintained.
+- Please, download the project and use develop branch. Master branch is not maintained.
 - Each command (php artisan) must be executed in the project folder
 
 > Check <b>composer.json</b> file to install extra libraries used:
@@ -100,29 +100,6 @@ $ ./vendor/bin/phpunit
 ```
 
 <b>phpunit.xml</b> is an important file, also config/database.php because we force to write records not in really database, we use memory option
-
--------------------
--------------------
-Hola! 
-
-Últimos comentarios y mejoras. Como siempre, las mejoras son por que no he tenido tiempo suficiente, llevo unos días con el peque que voy de culo pero no es excusa. Por lo que listo las cosas que no están al 100% que soy consciente, otras son por que me habré despistado.
-
-- Tests. Solo he creado el test <b>CoinTest</b> del modelo Coin, el resto sería lo mismo para esos modelos, con su factory para aplicar el faker en los tests, no difiere mucho. Es muy estandar. Poder crear, chequear la estructura, etc.. Podría haber profundizado más en los test de la API, pero no he tenido más tiempo y quiero cerrarlo hoy.
-
-- Soy consciente que una respuesta STATUS: 500 cuando el elemento/recurso no ha sido encontraro, está totalmente mal. De hecho me gusta ser bastante purista con ésto, al igual que usar el Method que toca. No siento orgullo de entregarlo así pero no he podido acabar de parametrizar el validador custom final que he estado montando.
-
-Se que restará puntos :( pero... c'ets la vie!
-
-Me hubiera gustado montar Swagger para documentar cada endpoint de la API, pero al menos he podido documentar un poco de forma general la puesta en marcha del proyecto en el readme.md, e incluir toda la configuración de POSTMAN parametrizado, que para APIs es un lujo. 
-
-Posiblemente me deje algo en el tintero. Espero que no tengáis ninguna problema en la puesta en marcha del proyecto (rama: develop),a mi me corre todo bien. 
-
-En fin, gracias por el tiempo revisando el ejercicio. Me quedo a la espera que me digáis algo. Cualquier duda ya sabéis.
-
-Saludos!
-
-Juan Vargas Cracolici | juan.vargas.cracolici@gmail.com
-
 
 
 
